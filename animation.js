@@ -29,7 +29,21 @@ renderer.setSize(sizes.width, sizes.height)
 
 // for adaptive framerate
 // let time = Date.now() // depracated
-const clock = new THREE.Clock()
+// const clock = new THREE.Clock() // deprecated for gsap
+
+// gsap has its own internal eventLoop that handles task with the provided set values
+// we still need to provide our own custom eventLoop function to render the stuff from THREE
+gsap.to(cube.position, {
+    duration: 1,
+    delay: 1,
+    x: 2
+})
+gsap.to(cube.position, {
+    duration: 1,
+    delay: 2,
+    x: 0
+})
+
 
 // animating part (NEW!)
 // we need some functionality to handle the game/event loop, window.requestanimationframe
@@ -44,7 +58,7 @@ const eventLoop = () => {
     // const timeDelta = currentTime - time
     // time = currentTime
 
-    const elapsedTime = clock.getElapsedTime()
+    // const elapsedTime = clock.getElapsedTime()
 
 
     // what we want to animate? lets go for a simple rotation on the x axis
@@ -52,13 +66,13 @@ const eventLoop = () => {
     // makes the animation stable across all monitors
 
     // the elapsed time is built in adaptive :)
-    cube.rotation.x = elapsedTime
-    cube.rotation.y = elapsedTime
+    // cube.rotation.x = elapsedTime
+    // cube.rotation.y = elapsedTime
 
     // basic math. recall sin and cos function. recall how the values reset and gives a sense of oscillation. recall the fact the we can combine their oscillations at 
     // multiple axis to get circlish pattern
-    cube.position.x = Math.sin(elapsedTime)
-    cube.position.y = Math.cos(elapsedTime)
+    // cube.position.x = Math.sin(elapsedTime)
+    // cube.position.y = Math.cos(elapsedTime)
 
     // render called here will be updated because of the next line, which updates everything on a fps basis
     renderer.render(scene, camera)
